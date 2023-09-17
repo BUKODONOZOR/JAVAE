@@ -1,5 +1,6 @@
 import java.util.Random;
-class SopaDeLetras {
+
+ class SopaDeLetras {
     private char[][] matriz;
     private String palabra;
 
@@ -24,13 +25,13 @@ class SopaDeLetras {
         }
     }
 
-    public void buscarPalabra(String palabra) {
+    public void buscarPalabra(String palabraBuscada) {
         boolean encontrada = false;
         for (int i = 0; i < 10; i++) {
             for (int j = 0; j < 10; j++) {
-                if (matriz[i][j] == palabra.charAt(0)) {
-                    if (buscarHorizontal(i, j, palabra) || buscarVertical(i, j, palabra)) {
-                        System.out.println("La palabra '" + palabra + "' comienza en la posición (" + i + ", " + j + ").");
+                if (matriz[i][j] == palabraBuscada.charAt(0)) {
+                    if (buscarHorizontal(i, j, palabraBuscada) || buscarVertical(i, j, palabraBuscada)) {
+                        System.out.println("La palabra '" + palabraBuscada + "' comienza en la posición (" + i + ", " + j + ").");
                         encontrada = true;
                         break;
                     }
@@ -41,28 +42,28 @@ class SopaDeLetras {
             }
         }
         if (!encontrada) {
-            System.out.println("La palabra '" + palabra + "' no se encontró en la matriz.");
+            System.out.println("La palabra '" + palabraBuscada + "' no se encontró en la matriz.");
         }
     }
 
-    private boolean buscarHorizontal(int fila, int columna, String palabra) {
-        if (columna + palabra.length() > 10) {
+    private boolean buscarHorizontal(int fila, int columna, String palabraBuscada) {
+        if (columna + palabraBuscada.length() > 10) {
             return false;
         }
-        for (int i = 0; i < palabra.length(); i++) {
-            if (matriz[fila][columna + i] != palabra.charAt(i)) {
+        for (int i = 0; i < palabraBuscada.length(); i++) {
+            if (matriz[fila][columna + i] != palabraBuscada.charAt(i)) {
                 return false;
             }
         }
         return true;
     }
 
-    private boolean buscarVertical(int fila, int columna, String palabra) {
-        if (fila + palabra.length() > 10) {
+    private boolean buscarVertical(int fila, int columna, String palabraBuscada) {
+        if (fila + palabraBuscada.length() > 10) {
             return false;
         }
-        for (int i = 0; i < palabra.length(); i++) {
-            if (matriz[fila + i][columna] != palabra.charAt(i)) {
+        for (int i = 0; i < palabraBuscada.length(); i++) {
+            if (matriz[fila + i][columna] != palabraBuscada.charAt(i)) {
                 return false;
             }
         }
@@ -81,6 +82,12 @@ class SopaDeLetras {
     public static void main(String[] args) {
         SopaDeLetras sopa = new SopaDeLetras();
         sopa.imprimirSopa();
-        sopa.buscarPalabra("palabras");
+
+        // Pedir al usuario la palabra a buscar
+        java.util.Scanner scanner = new java.util.Scanner(System.in);
+        System.out.print("Ingresa una palabra para buscar en la sopa de letras: ");
+        String palabraBuscada = scanner.nextLine().toLowerCase();
+        sopa.buscarPalabra(palabraBuscada);
+        scanner.close();
     }
 }
